@@ -22,9 +22,6 @@ class NewsViewController: UIViewController {
         self.tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableViewCell")
         self.tableView.rowHeight = 400
         
-        print("Token")
-        print(token)
-        
         getData()
     }
     
@@ -54,6 +51,7 @@ class NewsViewController: UIViewController {
         print(components.url)
         return components.url!
     }
+    
     func getData() {
         let params = ["filters": "post, photo"]
         request(path: "/method/newsfeed.get", params: params) { (data, error) in
@@ -67,10 +65,9 @@ class NewsViewController: UIViewController {
             let response = try? decoder.decode(FeedResponce.self, from: data)
             self.news = (response?.response.items)!
             print(self.news)
-            //news[1].attachments![0].photo?.sizes![0].url
         }
     }
-
+    
 }
 
 extension NewsViewController: UITableViewDelegate {
@@ -87,11 +84,13 @@ extension NewsViewController: UITableViewDataSource {
         cell.label.text = news[indexPath.row].text
         cell.likesLabel.text = String(news[indexPath.row].likes!.count)
         
-        let image = UIImage(named: "thumbnail")
-        let url = URL(string: (news[indexPath.row].attachments![0].photo?.sizes![0].url)!)
-        let data = try? Data(contentsOf: url!)
-        cell.imageLabel.image = UIImage(data: (data ?? image?.pngData())!)
-        
+        if news[indexPath.row].attachments?.count != 0 && news[indexPath.row].attachments![0].type == "photo" {
+            let image = UIImage(named: "thumbnail")
+            let url = URL(string: (news[indexPath.row].attachments![0].photo?.sizes![0].url)!)
+            let data = try? Data(contentsOf: url!)
+            cell.imageLabel.image = UIImage(data: (data ?? image?.pngData())!)
+            
+        }
         return cell
     }
 }

@@ -14,6 +14,7 @@ class ViewController: UIViewController, VKSdkUIDelegate, VKSdkDelegate {
     var token: String? {
         return VKSdk.accessToken()?.accessToken
     }
+    var user: [Response] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +45,10 @@ class ViewController: UIViewController, VKSdkUIDelegate, VKSdkDelegate {
     
     func vkSdkAccessAuthorizationFinishedWithResult(result: VKAuthorizationResult!) {
         guard result.token != nil else {
-            print("Failure")
+            print("failure")
             return
         }
-        print("Success!")
+        print("success")
     }
     
     func vkSdkShouldPresent(_ controller: UIViewController!) {
@@ -64,13 +65,15 @@ class ViewController: UIViewController, VKSdkUIDelegate, VKSdkDelegate {
     }
     
     func vkSdkAccessAuthorizationFinished(with result: VKAuthorizationResult!) {
+        //getData()
+        print(user)
         self.performSegue(withIdentifier: "tabBarSegue", sender: Any?.self)
         
         print("finish")
     }
 
     func vkSdkUserAuthorizationFailed() {
-        print("Failed")
+        print("failed")
     }
 
     func vkSdkShouldPresentViewController(controller: UIViewController!) {
@@ -84,8 +87,10 @@ class ViewController: UIViewController, VKSdkUIDelegate, VKSdkDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tabBarSegue" {
             let barViewControllers = segue.destination as! UITabBarController
-            let destinationViewController = barViewControllers.viewControllers![0] as! NewsViewController
-            destinationViewController.token = token!
+            let vc1 = barViewControllers.viewControllers![0] as! NewsViewController
+            let vc2 = barViewControllers.viewControllers![1] as! UserViewController
+            vc1.token = token!
+            vc2.token = token!
         }
     }
 
