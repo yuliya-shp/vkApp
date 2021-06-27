@@ -63,7 +63,6 @@ class ViewController: UIViewController, VKSdkUIDelegate, VKSdkDelegate {
         print("present")
     }
     
-    
     func vkSdkAccessAuthorizationFinished(with result: VKAuthorizationResult!) {
         self.performSegue(withIdentifier: "tabBarSegue", sender: Any?.self)
         
@@ -81,7 +80,6 @@ class ViewController: UIViewController, VKSdkUIDelegate, VKSdkDelegate {
     func vkSdkNeedCaptchaEnter(_ captchaError: VKError!) {
         print(captchaError)
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "tabBarSegue" {

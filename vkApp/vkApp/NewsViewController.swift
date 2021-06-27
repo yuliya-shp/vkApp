@@ -7,9 +7,10 @@
 
 import UIKit
 
-class NewsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class NewsViewController: UIViewController {
     
     var token = ""
+    private var news: [FeedItem] = []
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -18,19 +19,13 @@ class NewsViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.delegate = self
         tableView.dataSource = self
+        self.tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableViewCell")
+        self.tableView.rowHeight = 400
         
         print("Token")
         print(token)
         
         getData()
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: <#T##String#>, for: indexPath)
     }
     
     func request(path: String, params: [String : String], completion: @escaping (Data?, Error?) -> Void) {
@@ -44,6 +39,7 @@ class NewsViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let task = session.dataTask(with: request) {(data, responce, error) in
             DispatchQueue.main.async {
                 completion(data, error)
+                self.tableView.reloadData()
             }
         }
         task.resume()
@@ -64,17 +60,39 @@ class NewsViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let error = error {
                 print(error.localizedDescription)
             }
-            
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             guard let data = data else { return }
-            
-           // let json = try? JSONSerialization.jsonObject(with: data, options: [])
-            //print(json)
+
             let response = try? decoder.decode(FeedResponce.self, from: data)
-            print(response)
-            
+            self.news = (response?.response.items)!
+            print(self.news)
+            //news[1].attachments![0].photo?.sizes![0].url
         }
     }
 
 }
+
+extension NewsViewController: UITableViewDelegate {
+    
+}
+
+extension NewsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return news.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
+        cell.label.text = news[indexPath.row].text
+        cell.likesLabel.text = String(news[indexPath.row].likes!.count)
+        
+        let image = UIImage(named: "thumbnail")
+        let url = URL(string: (news[indexPath.row].attachments![0].photo?.sizes![0].url)!)
+        let data = try? Data(contentsOf: url!)
+        cell.imageLabel.image = UIImage(data: (data ?? image?.pngData())!)
+        
+        return cell
+    }
+}
+

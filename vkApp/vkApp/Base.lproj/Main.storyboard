@@ -17,8 +17,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FdK-Xa-emB">
-                                <rect key="frame" x="177" y="316" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="151" y="311" width="98" height="40"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
+                                <state key="normal" title="Log in VK"/>
                                 <connections>
                                     <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YGL-ed-dRd"/>
                                 </connections>
@@ -40,23 +41,29 @@
             </objects>
             <point key="canvasLocation" x="671.01449275362324" y="-117.1875"/>
         </scene>
-        <!--Item 2-->
+        <!--Profile-->
         <scene sceneID="fTL-z0-hzV">
             <objects>
                 <viewController id="VRZ-T5-049" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lvB-xw-yfr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ClC-70-BDy">
+                                <rect key="frame" x="87" y="126" width="240" height="202"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="WDS-Qg-sOi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="cmY-VW-eOc"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="cmY-VW-eOc"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dVx-5p-vFG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2150.7246376811595" y="205.58035714285714"/>
         </scene>
-        <!--Item 1-->
+        <!--News-->
         <scene sceneID="zB8-I0-a09">
             <objects>
                 <viewController id="h8d-oD-DFH" customClass="NewsViewController" customModule="vkApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -68,11 +75,11 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="HqK-8m-Vgc">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableViewCell" rowHeight="210" id="HqK-8m-Vgc">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="210"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HqK-8m-Vgc" id="5lZ-a1-IUD">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HqK-8m-Vgc" id="5lZ-a1-IUD" customClass="TableViewCell" customModule="vkApp" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="210"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -88,7 +95,7 @@
                             <constraint firstItem="i4t-a1-BCe" firstAttribute="leading" secondItem="xts-Hb-2pU" secondAttribute="leading" id="fOF-qD-eo7"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="knS-w9-KHs"/>
+                    <tabBarItem key="tabBarItem" title="News" image="newspaper" catalog="system" id="knS-w9-KHs"/>
                     <navigationItem key="navigationItem" id="is7-eC-exc"/>
                     <connections>
                         <outlet property="tableView" destination="i4t-a1-BCe" id="HkP-JX-pMc"/>
@@ -137,6 +144,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="newspaper" catalog="system" width="128" height="108"/>
+        <image name="person" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
