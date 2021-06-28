@@ -21,7 +21,8 @@ class NewsViewController: UIViewController {
         tableView.dataSource = self
         self.tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "TableViewCell")
         self.tableView.rowHeight = 400
-        
+    }
+    override func viewWillAppear(_ animated: Bool) {
         getData()
     }
     
@@ -82,9 +83,9 @@ extension NewsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
         cell.label.text = news[indexPath.row].text
-        cell.likesLabel.text = String(news[indexPath.row].likes!.count)
+        cell.likesLabel.text = String(news[indexPath.row].likes?.count ?? 0)
         
-        if news[indexPath.row].attachments?.count != 0 && news[indexPath.row].attachments![0].type == "photo" {
+        if (news[indexPath.row].attachments?.count ?? 0) != 0 && news[indexPath.row].attachments![0].type == "photo" {
             let image = UIImage(named: "thumbnail")
             let url = URL(string: (news[indexPath.row].attachments![0].photo?.sizes![0].url)!)
             let data = try? Data(contentsOf: url!)
