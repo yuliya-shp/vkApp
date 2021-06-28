@@ -19,10 +19,10 @@ class UserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageLabel.layer.cornerRadius = 100
-        
+    }
+    override func viewDidAppear(_ animated: Bool) {
         getData()
     }
-    
     func getData() {
         let token = self.token
         let url = URL(string: "https://api.vk.com/method/users.get?fields=photo_200_orig&access_token=\(token)&v=5.131")!
